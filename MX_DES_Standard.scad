@@ -23,7 +23,7 @@ mirror([0,0,0])keycap(
  );
  
 //Parameters
-wallthickness = 2.0; // 1.5 for norm, 1.25 for cast master
+wallthickness = 1.5; // 1.5 for norm, 1.25 for cast master
 topthickness  = 2.5;   // 3 for norm, 2.5 for cast master
 stepsize      = 40;  //resolution of Trajectory
 step          = 6;   //resolution of ellipes 
@@ -31,9 +31,9 @@ fn            = 16;  //resolution of Rounded Rectangles: 60 for output
 layers        = 40;  //resolution of vertical Sweep: 50 for output
 dotRadius     = 0.55;   //home dot size
 //---Stem param
-Tol    = 0.10;
+Tol    = 0.05;
 stemRot = 0;
-StemBrimDep     = 0.25; 
+StemBrimDep     = 0.00;
 
 keyParameters = //keyParameters[KeyID][ParameterID]
 [
@@ -297,12 +297,14 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
       }
       if(Stem == true){
          translate([0,0,StemBrimDep])rotate(stemRot)difference(){   
-          cylinder(d =5.5,KeyHeight(keyID)-StemBrimDep, $fn= 32);
+          cylinder(d=5.75,KeyHeight(keyID)-StemBrimDep, $fn= 32);
           skin(StemCurve);
           skin(StemCurve2);
         }
       }
-    //cut for fonts and extra pattern for light?
+      //cut for fonts and extra pattern for light?
+      // Add bridges for better plate adhesion, these can easily be snipped off
+      for (i=[35:90:360]) { rotate(i)translate([-0.3,2,0])cube([0.6,7,0.3]); rotate(i)translate([-0.4,3,0])cube([0.8,7,0.3]); }
     }
     
     //Cuts
