@@ -269,6 +269,33 @@ function InnerTransform(t, keyID) =
   
 
 ///----- KEY Builder Module
+module stem_only(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, crossSection = true,Legends = false, homeDot = false, Stab = 0) {
+    difference(){
+        keycap(
+          keyID  = keyID, //change profile refer to KeyParameters Struct
+          cutLen = cutLen, //Don't change. for chopped caps
+          Stem   = true, //tusn on shell and stems
+          Dish   = Dish, //turn on dish cut
+          Stab   = Stab,
+          visualizeDish = visualizeDish, // turn on debug visual of Dish
+          crossSection  = crossSection, // center cut to check internal
+          homeDot = homeDot, //turn on homedots
+          Legends = Legends
+         );
+        keycap(
+          keyID  = keyID, //change profile refer to KeyParameters Struct
+          cutLen = cutLen, //Don't change. for chopped caps
+          Stem   = false, //tusn on shell and stems
+          Dish   = Dish, //turn on dish cut
+          Stab   = Stab,
+          visualizeDish = visualizeDish, // turn on debug visual of Dish
+          crossSection  = crossSection, // center cut to check internal
+          homeDot = homeDot, //turn on homedots
+          Legends = Legends
+         );
+    }
+}
+
 module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection = true,Legends = false, homeDot = false, Stab = 0) {
   
   //Set Parameters for dish shape
@@ -290,8 +317,10 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
         
         //Cut inner shell
         if(Stem == true){ 
-          translate([0,0,-.001])skin([for (i=[-1:layers-1]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
-        }
+          translate([0,0,-.1])skin([for (i=[-1:layers-7]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
+        }else{
+          translate([0,0,-.1])skin([for (i=[-1:layers-1]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
+         }
         // Cut off the extra bottom due to starting at layer -1
         translate ([-50,-50,-10]) cube ([100,100,10], center=false);
       }
