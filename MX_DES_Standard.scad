@@ -333,7 +333,7 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
       }
       //cut for fonts and extra pattern for light?
       // Add bridges for better plate adhesion, these can easily be snipped off
-      for (i=[35:90:360]) { rotate(i)translate([-0.3,2,0])cube([0.6,7,0.3]); rotate(i)translate([-0.4,3,0])cube([0.8,7,0.3]); }
+      //for (i=[35:90:360]) { rotate(i)translate([-0.3,2,0])cube([0.6,7,0.3]); rotate(i)translate([-0.4,3,0])cube([0.8,7,0.3]); }
     }
     
     //Cuts
