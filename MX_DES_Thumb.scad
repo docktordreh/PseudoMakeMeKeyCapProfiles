@@ -31,7 +31,7 @@ fn            = 16;  //resolution of Rounded Rectangles: 60 for output
 layers        = 40;  //resolution of vertical Sweep: 50 for output
 dotRadius     = 1.25;   //home dot size
 //---Stem param
-Tol    = 0.05;
+Tol    = 0.03;
 stemRot = 0;
 StemBrimDep     = 0.00;
 
