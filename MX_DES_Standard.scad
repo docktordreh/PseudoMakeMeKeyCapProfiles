@@ -19,6 +19,7 @@ mirror([0,0,0])keycap(
   visualizeDish = false, // turn on debug visual of Dish 
   crossSection  = false, // center cut to check internal
   homeDot = false, //turn on homedots
+  homeBar = false,
   Legends = false
  );
  
@@ -269,7 +270,7 @@ function InnerTransform(t, keyID) =
   
 
 ///----- KEY Builder Module
-module stem_only(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, crossSection = true,Legends = false, homeDot = false, Stab = 0) {
+module stem_only(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, crossSection = true,Legends = false, homeDot = false, Stab = 0, homeBar = homeBar) {
     difference(){
         keycap(
           keyID  = keyID, //change profile refer to KeyParameters Struct
@@ -280,6 +281,7 @@ module stem_only(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = fal
           visualizeDish = visualizeDish, // turn on debug visual of Dish
           crossSection  = crossSection, // center cut to check internal
           homeDot = homeDot, //turn on homedots
+          homeBar = homeBar,
           Legends = Legends
          );
         keycap(
@@ -291,12 +293,13 @@ module stem_only(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = fal
           visualizeDish = visualizeDish, // turn on debug visual of Dish
           crossSection  = crossSection, // center cut to check internal
           homeDot = homeDot, //turn on homedots
+          homeBar = homeBar,
           Legends = Legends
          );
     }
 }
 
-module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection = true,Legends = false, homeDot = false, Stab = 0) {
+module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection = true,Legends = false, homeDot = false, Stab = 0, homeBar = false) {
   
   //Set Parameters for dish shape
   FrontPath = quantize_trajectories(FrontTrajectory(keyID), steps = stepsize, loop=false, start_position= $t*4);
@@ -372,7 +375,19 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
     }
   }
   //Homing dot
-  
+    if(homeBar == true) {
+    homey = -4.5;
+    homez = KeyHeight(keyID)-DishHeightDif(keyID) + 0.2;
+    l = 5.5;
+    r = 0.5;
+
+    translate([0, homey, homez])
+    rotate([0,90,0])
+    translate([0, 0, -l / 2])
+    union () {
+        cylinder(h = l, r = r, $fn = 32);
+    };
+  };
 }
 //------------------stems 
 
